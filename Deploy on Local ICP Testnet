@@ -1,0 +1,8 @@
+
+1. Start the Local ICP Network
+
+dfx start --background
+
+2. Deploy the Smart Contract
+
+dfx deploy
