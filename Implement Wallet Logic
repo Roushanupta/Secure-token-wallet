@@ -1,0 +1,48 @@
+(src/lib.rs)
+
+use ic_cdk::api::caller;
+use ic_cdk_macros::*;
+use std::collections::HashMap;
+use std::cell::RefCell;
+
+thread_local! {
+    static BALANCES: RefCell<HashMap<String, u64>> = RefCell::new(HashMap::new());
+}
+
+// Get current balance
+#[query]
+fn get_balance() -> u64 {
+    let caller_id = caller().to_text();
+    BALANCES.with(|balances| *balances.borrow().get(&caller_id).unwrap_or(&0))
+}
+
+// Receive tokens
+#[update]
+fn receive_token(amount: u64) {
+    let caller_id = caller().to_text();
+    BALANCES.with(|balances| {
+        let mut balances = balances.borrow_mut();
+        let entry = balances.entry(caller_id).or_insert(0);
+        *entry += amount;
+    });
+}
+
+// Send tokens to another wallet
+#[update]
+fn send_token(to: String, amount: u64) -> Result<(), String> {
+    let caller_id = caller().to_text();
+    BALANCES.with(|balances| {
+        let mut balances = balances.borrow_mut();
+        let sender_balance = balances.entry(caller_id.clone()).or_insert(0);
+
+        if *sender_balance < amount {
+            return Err("Insufficient funds".to_string());
+        }
+
+        *sender_balance -= amount;
+        let recipient_balance = balances.entry(to).or_insert(0);
+        *recipient_balance += amount;
+
+        Ok(())
+    })
+}
