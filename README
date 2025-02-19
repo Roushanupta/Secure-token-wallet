@@ -1,0 +1,33 @@
+Project Plan
+
+1. Set Up the Development Environment
+
+Install DFX SDK (ICP's development tool).
+
+Set up a Rust project for the smart contract.
+
+Use Candid for defining the interface.
+
+
+
+2. Develop Smart Contracts
+
+Implement IRCRC2 token transfer logic.
+
+Implement balance tracking.
+
+Implement security measures.
+
+
+
+3. Deploy on Local ICP Testnet
+
+Deploy using DFX.
+
+Test functionalities using ICP's local environment.
+
+
+
+4. Unit Testing
+
+Write Rust unit tests for transactions and balance retrieval.
