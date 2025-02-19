@@ -1,0 +1,2 @@
+dfx new icp_wallet --type=rust
+cd icp_wallet
