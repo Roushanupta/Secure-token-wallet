@@ -1,0 +1,19 @@
+
+Create a test file (tests/token_tests.rs):
+
+#[test]
+fn test_receive_tokens() {
+    receive_token(100);
+    assert_eq!(get_balance(), 100);
+}
+
+#[test]
+fn test_send_tokens() {
+    receive_token(100);
+    assert!(send_token("some-other-wallet".to_string(), 50).is_ok());
+    assert_eq!(get_balance(), 50);
+}
+
+Run tests with:
+
+cargo test
