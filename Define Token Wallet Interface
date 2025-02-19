@@ -1,0 +1,6 @@
+
+service : {
+  send_token: (principal, nat64) -> ();
+  receive_token: (nat64) -> ();
+  get_balance: () -> (nat64);
+}
